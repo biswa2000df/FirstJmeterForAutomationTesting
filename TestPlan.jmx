@@ -1,0 +1,899 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jmeterTestPlan version="1.2" properties="5.0" jmeter="5.6.3">
+  <hashTree>
+    <TestPlan guiclass="TestPlanGui" testclass="TestPlan" testname="Test Plan">
+      <boolProp name="TestPlan.tearDown_on_shutdown">true</boolProp>
+      <elementProp name="TestPlan.user_defined_variables" elementType="Arguments" guiclass="ArgumentsPanel" testclass="Arguments" testname="User Defined Variables">
+        <collectionProp name="Arguments.arguments"/>
+      </elementProp>
+    </TestPlan>
+    <hashTree>
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Thread Group">
+        <intProp name="ThreadGroup.num_threads">1</intProp>
+        <intProp name="ThreadGroup.ramp_time">1</intProp>
+        <boolProp name="ThreadGroup.same_user_on_next_iteration">false</boolProp>
+        <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
+        <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller">
+          <stringProp name="LoopController.loops">1</stringProp>
+          <boolProp name="LoopController.continue_forever">false</boolProp>
+        </elementProp>
+      </ThreadGroup>
+      <hashTree>
+        <com.googlecode.jmeter.plugins.webdriver.config.ChromeDriverConfig guiclass="com.googlecode.jmeter.plugins.webdriver.config.gui.ChromeDriverConfigGui" testclass="com.googlecode.jmeter.plugins.webdriver.config.ChromeDriverConfig" testname="jp@gc - Chrome Driver Config">
+          <boolProp name="WebDriverConfig.acceptinsecurecerts">false</boolProp>
+          <boolProp name="WebDriverConfig.reset_per_iteration">false</boolProp>
+          <stringProp name="WebDriverConfig.driver_path">C:\Users\biswa\Downloads\chromedriver-win64 (5)\chromedriver-win64\chromedriver.exe</stringProp>
+          <boolProp name="WebDriverConfig.dev_mode">false</boolProp>
+          <boolProp name="WebDriverConfig.headless">false</boolProp>
+          <boolProp name="WebDriverConfig.maximize_browser">true</boolProp>
+          <stringProp name="ChromeDriverConfig.additional_args"></stringProp>
+          <stringProp name="ChromeDriverConfig.binary_path"></stringProp>
+          <stringProp name="WebDriverConfig.proxy_type">SYSTEM</stringProp>
+          <stringProp name="WebDriverConfig.proxy_pac_url"></stringProp>
+          <stringProp name="WebDriverConfig.http_host"></stringProp>
+          <intProp name="WebDriverConfig.http_port">8080</intProp>
+          <boolProp name="WebDriverConfig.use_http_for_all_protocols">true</boolProp>
+          <stringProp name="WebDriverConfig.https_host"></stringProp>
+          <intProp name="WebDriverConfig.https_port">8080</intProp>
+          <stringProp name="WebDriverConfig.ftp_host"></stringProp>
+          <intProp name="WebDriverConfig.ftp_port">8080</intProp>
+          <stringProp name="WebDriverConfig.socks_host"></stringProp>
+          <intProp name="WebDriverConfig.socks_port">8080</intProp>
+          <stringProp name="WebDriverConfig.no_proxy">localhost</stringProp>
+          <stringProp name="WebDriverConfig.custom_capabilites"></stringProp>
+        </com.googlecode.jmeter.plugins.webdriver.config.ChromeDriverConfig>
+        <hashTree/>
+        <com.googlecode.jmeter.plugins.webdriver.sampler.WebDriverSampler guiclass="com.googlecode.jmeter.plugins.webdriver.sampler.gui.WebDriverSamplerGui" testclass="com.googlecode.jmeter.plugins.webdriver.sampler.WebDriverSampler" testname="jp@gc - WebDriver Sampler(Main) _1">
+          <stringProp name="WebDriverSampler.script">import org.openqa.selenium.WebElement
+
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
+import java.io.FileReader;
+import java.io.BufferedReader;
+
+
+// Navigate to the initial URL
+WDS.browser.manage().timeouts().implicitlyWait(10, java.util.concurrent.TimeUnit.SECONDS);
+WDS.sampleResult.sampleStart()
+WDS.browser.get(&apos;https://ishine.apmosys.com&apos;)
+Thread.sleep(2000)
+
+// Fill in username
+WDS.browser.findElement(org.openqa.selenium.By.id(&quot;username&quot;)).sendKeys(&quot;maheswar.panda@apmosys.com&quot;)
+Thread.sleep(1000)
+
+// Fill in password
+WDS.browser.findElement(org.openqa.selenium.By.id(&quot;userPassword&quot;)).sendKeys(&quot;Apmosys@123&quot;)
+Thread.sleep(1000)
+
+// Click the SIGN IN button
+WDS.browser.findElement(org.openqa.selenium.By.xpath(&quot;//button[text()=&apos;SIGN IN&apos;]&quot;)).click()
+Thread.sleep(3000)
+
+// Open a new tab using JavaScript
+WDS.browser.executeScript(&quot;window.open()&quot;)
+Thread.sleep(1000)
+
+// Get handles of all windows
+def windowHandles = WDS.browser.getWindowHandles()
+
+// Switch to the new tab
+String newTabHandle = windowHandles.toArray()[1]
+WDS.browser.switchTo().window(newTabHandle)
+
+// Navigate to the new URL
+WDS.browser.get(&apos;https://mail.apmosys.com/webmail&apos;)
+Thread.sleep(1000)
+
+try{
+// Fill in email address
+WDS.browser.findElement(org.openqa.selenium.By.name(&quot;email-address&quot;)).sendKeys(&quot;maheswar.panda@apmosys.com&quot;)
+Thread.sleep(1000)
+
+// Click next
+WDS.browser.findElement(org.openqa.selenium.By.name(&quot;next&quot;)).click()
+Thread.sleep(1000)
+
+// Fill in password
+WDS.browser.findElement(org.openqa.selenium.By.name(&quot;password&quot;)).sendKeys(&quot;Apmosys@123&quot;)
+Thread.sleep(1000)
+
+// Click next
+WDS.browser.findElement(org.openqa.selenium.By.name(&quot;next&quot;)).click()
+} catch(Exception e){
+// Fill in password
+WDS.browser.findElement(org.openqa.selenium.By.name(&quot;password&quot;)).sendKeys(&quot;Apmosys@123&quot;)
+Thread.sleep(1000)
+
+// Click next
+WDS.browser.findElement(org.openqa.selenium.By.name(&quot;next&quot;)).click()
+	}
+Thread.sleep(10000)
+
+//click on the first mail
+//WDS.browser.findElement(org.openqa.selenium.By.xpath(&quot;//div[@id = &apos;gui.frm_main.main.list/*&apos;]/div[1]&quot;)).click()
+
+def iframeElement = null
+iframeElement = WDS.browser.findElement(org.openqa.selenium.By.xpath(&quot;//iframe[@id=&apos;gui.frm_main.main.mailview#frame&apos;]&quot;))
+    // Switch to the iframe
+    String emailContent=&quot;&quot;;
+   if (iframeElement != null) {
+    // Switch to the iframe
+    WDS.browser.switchTo().frame(iframeElement)
+
+    // Now you can interact with elements within the iframe
+    emailContent = WDS.browser.findElement(org.openqa.selenium.By.id(&quot;iw_webmail_msg_body&quot;)).getText()
+    WDS.log.info(emailContent)
+    // If needed, switch back to the default content
+    WDS.browser.switchTo().defaultContent()
+} else {
+    log.error(&quot;Timeout waiting for iframe to be present&quot;)
+}
+// WDS.log.info(emailContent)
+def tokens = emailContent.split(&quot;\\s+&quot;)
+
+// Get the last token, which should be the OTP
+def otp = tokens[-1]
+
+// Print or log the OTP
+WDS.log.info(&quot;OTP: ${otp}&quot;)
+Thread.sleep(2000)
+WDS.browser.close();
+
+// Perform further actions or assertions
+
+// Switch back to the original tab
+WDS.browser.switchTo().window(windowHandles.toArray()[0])
+WDS.log.info(&quot;OTP: ${otp}&quot;)
+WDS.browser.findElement(org.openqa.selenium.By.xpath(&quot;//*[@placeholder=&apos;Enter OTP&apos;]&quot;)).sendKeys(&quot;${otp}&quot;)
+WDS.log.info(&quot;OTP: ${otp}&quot;)
+
+//click on submit button
+WDS.browser.findElement(org.openqa.selenium.By.xpath(&quot;//button[@type=&apos;submit&apos;]&quot;)).click()
+Thread.sleep(5000)
+
+
+
+//click on timesheet icon
+WDS.browser.findElement(org.openqa.selenium.By.xpath(&quot;//li[@title = &apos;Timesheets&apos;]&quot;)).click()
+
+// Locate the dropdown element
+def dropdownElement = WDS.browser.findElement(org.openqa.selenium.By.xpath(&quot;(//select[@class = &apos;form-control ng-untouched ng-pristine ng-valid&apos;])[1]&quot;))
+
+// Initialize Select class with the dropdown element
+def dropdown = new org.openqa.selenium.support.ui.Select(dropdownElement)
+
+Thread.sleep(2000)
+
+// Select an option by visible text
+dropdown.selectByVisibleText(&quot;Working&quot;)
+
+Thread.sleep(2000)
+
+//click on the in_time field
+WDS.browser.findElement(org.openqa.selenium.By.xpath(&quot;//input[@placeholder = &apos;Select In Time&apos;]&quot;)).click()
+
+Thread.sleep(2000)
+
+   
+    // Get the current date
+    LocalDateTime now = LocalDateTime.now()
+    // Define the date format
+    DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern(&quot;dd&quot;)
+//     // Define the date format
+    DateTimeFormatter monthFormatter = DateTimeFormatter.ofPattern(&quot;MMMM&quot;)
+//    // Format the current date
+    String date = now.format(dateFormatter)
+//    // Format the current month
+    String month = now.format(monthFormatter)
+
+ 
+// Log the current date
+WDS.log.info(&quot;Current date ======================================================== : &quot; + date)
+WDS.log.info(&quot;Current month =======================================================: &quot; + month)
+
+////select in-time  date dynamic way
+
+WebElement dateAndTimeTable = WDS.browser.findElement(org.openqa.selenium.By.xpath(&quot;//*[@class=&apos;owl-dt-calendar-view ng-star-inserted&apos;]/table/tbody&quot;))
+
+rowSize = dateAndTimeTable.findElements(org.openqa.selenium.By.xpath(&quot;tr&quot;)).size()
+WDS.log.info(&quot;Current month row size =======================================================: &quot; + rowSize)
+
+
+boolean breakBothLoops = false;
+
+ArrayList&lt;String&gt; alForTotalDate = new ArrayList&lt;&gt;()
+ArrayList&lt;String&gt; allInvisibleForTotalDate = new ArrayList&lt;&gt;()
+
+
+
+for(r = 1; r &lt;= rowSize; r++){
+	colSize = dateAndTimeTable.findElements(org.openqa.selenium.By.xpath(&quot;tr[&quot;+ r +&quot;]/td[  contains(@aria-label,&apos;&quot;+ month +&quot; &apos;)]&quot;)).size();
+
+
+try{
+	colSizeForInvisibleDate = dateAndTimeTable.findElements(org.openqa.selenium.By.xpath(&quot;tr[&quot;+ r +&quot;]/td[  contains(@aria-label,&apos;&quot;+ month +&quot; &apos;) and contains(@aria-disabled,&apos;true&apos;)]&quot;)).size();
+
+		for(invisibleDate = 1; invisibleDate &lt;= colSizeForInvisibleDate; invisibleDate++){
+			 CheckInvisibleDate = dateAndTimeTable.findElement(org.openqa.selenium.By.xpath(&quot;(tr[&quot;+ r +		&quot;]/td[  contains(@aria-label,&apos;&quot;+ month +&quot; &apos;) and contains(@aria-disabled,&apos;true&apos;)])&quot; + &quot;[ &quot; + invisibleDate + &quot; ]&quot;)).getText();
+			 allInvisibleForTotalDate.add(CheckInvisibleDate)
+		}
+}catch(Exception e){
+	
+}
+
+//    WDS.log.info(&quot;current row column size =======================================================: &quot; + colSize)
+    for (c = 1; c &lt;= colSize; c++) {
+    	
+    	 CheckDate = dateAndTimeTable.findElement(org.openqa.selenium.By.xpath(&quot;(tr[&quot;+ r +&quot;]/td[  contains(@aria-label,&apos;&quot;+ month +&quot; &apos;)])&quot; + &quot;[ &quot; + c + &quot; ]&quot;)).getText();
+    	 
+    	 alForTotalDate.add(CheckDate)
+    	 
+        if (CheckDate.equalsIgnoreCase(date)) {
+            // if(CheckDate.equalsIgnoreCase(&quot;15&quot;)) {
+//            dateAndTimeTable.findElement(org.openqa.selenium.By.xpath(&quot;(tr[&quot;+ r +&quot;]/td[  contains(@aria-label,&apos;&quot;+ month +&quot; &apos;)])&quot; + &quot;[ &quot; + c + &quot; ]&quot;)).click();
+
+            breakBothLoops = true;
+            break;
+        }
+    }
+    if (breakBothLoops) {
+    	breakBothLoops = false;
+        break; 
+    }
+}
+
+Thread.sleep(2000)
+
+WDS.log.info(&quot;Total date of the arraylist =======================================================: &quot; + alForTotalDate)
+WDS.log.info(&quot;Total invisibleDate of the arraylist =======================================================: &quot; + allInvisibleForTotalDate)
+
+alForTotalDate.removeAll(allInvisibleForTotalDate)
+WDS.log.info(&quot;After remove all invisiable date the total date are =======================================================: &quot; + alForTotalDate)
+
+
+
+Thread.sleep(2000)
+
+
+
+
+
+WDS.browser.findElement(org.openqa.selenium.By.xpath(&quot;//div[@class = &apos;cdk-overlay-backdrop cdk-overlay-transparent-backdrop cdk-overlay-backdrop-showing&apos;]&quot;)).click()
+
+Thread.sleep(2000)
+int toDateRowNum
+int toDateColNum
+xpathChangeValue = 7;
+
+
+///////READ THE TXT FILE/////////////////////////////////////////////////////////////
+String filePath = &quot;C:/Users/biswa/Desktop/csvReadForJmeter.txt&quot;;
+String line;
+ArrayList&lt;String&gt; txtFileRead = new ArrayList&lt;&gt;();
+try{
+	  BufferedReader reader = new BufferedReader(new FileReader(filePath));
+
+            while((line = reader.readLine()) != null){
+//WDS.log.info(&quot;File value =======================================================: &quot; + line)
+                txtFileRead.add(line);
+            }
+}catch(Exception e){
+	WDS.log.info(e)
+}
+
+
+WDS.log.info(&quot;File value in array list =======================================================: &quot; + txtFileRead)
+
+
+
+
+
+
+///////here main for loop start/////////////////////////////////////////////////////////////
+
+	for(selectDate = 0; selectDate&lt;alForTotalDate.size(); selectDate++){
+
+Thread.sleep(1000)
+		WDS.browser.findElement(org.openqa.selenium.By.xpath(&quot;//li[@title = &apos;Home&apos;]&quot;)).click()
+
+Thread.sleep(2000)
+
+//click on timesheet icon
+WDS.browser.findElement(org.openqa.selenium.By.xpath(&quot;//li[@title = &apos;Timesheets&apos;]&quot;)).click()
+
+// Locate the dropdown element
+def dropdownElement1 = WDS.browser.findElement(org.openqa.selenium.By.xpath(&quot;(//select[@class = &apos;form-control ng-untouched ng-pristine ng-valid&apos;])[1]&quot;))
+
+// Initialize Select class with the dropdown element
+def dropdown1 = new org.openqa.selenium.support.ui.Select(dropdownElement1)
+
+Thread.sleep(1000)
+
+// Select an option by visible text
+dropdown1.selectByVisibleText(&quot;Working&quot;)
+
+Thread.sleep(2000)
+
+//click on the in_time field
+WDS.browser.findElement(org.openqa.selenium.By.xpath(&quot;//input[@placeholder = &apos;Select In Time&apos;]&quot;)).click()
+
+
+
+WebElement dateAndTimeTable1 = WDS.browser.findElement(org.openqa.selenium.By.xpath(&quot;//*[@class=&apos;owl-dt-calendar-view ng-star-inserted&apos;]/table/tbody&quot;))
+
+rowSize = dateAndTimeTable1.findElements(org.openqa.selenium.By.xpath(&quot;tr&quot;)).size()
+//WDS.log.info(&quot;Current month row size =======================================================: &quot; + rowSize)
+
+
+for(r = 1; r &lt;= rowSize; r++){
+	colSize = dateAndTimeTable1.findElements(org.openqa.selenium.By.xpath(&quot;tr[&quot;+ r +&quot;]/td[  contains(@aria-label,&apos;&quot;+ month +&quot; &apos;)]&quot;)).size();
+
+//    WDS.log.info(&quot;current row column size =======================================================: &quot; + colSize)
+    for (c = 1; c &lt;= colSize; c++) {
+    	Thread.sleep(2000)
+    	 CheckDate = dateAndTimeTable1.findElement(org.openqa.selenium.By.xpath(&quot;(tr[&quot;+ r +&quot;]/td[  contains(@aria-label,&apos;&quot;+ month +&quot; &apos;)])&quot; + &quot;[ &quot; + c + &quot; ]&quot;)).getText();
+    	 
+    	 
+        if (CheckDate.equalsIgnoreCase(alForTotalDate.get(selectDate))) {
+            // if(CheckDate.equalsIgnoreCase(&quot;15&quot;)) {
+            WDS.log.info(&quot;current match date =======================================================: &quot; + alForTotalDate.get(selectDate))
+            Thread.sleep(1000)
+            dateAndTimeTable1.findElement(org.openqa.selenium.By.xpath(&quot;(tr[&quot;+ r +&quot;]/td[  contains(@aria-label,&apos;&quot;+ month +&quot; &apos;)])&quot; + &quot;[ &quot; + c + &quot; ]&quot;)).click();
+
+		   toDateRowNum = r
+             toDateColNum = c
+            breakBothLoops = true;
+            break;
+        }
+    }
+    if (breakBothLoops) {
+    	breakBothLoops = false;
+        break; 
+    }
+}
+
+
+Thread.sleep(1000)
+
+WDS.browser.findElement(org.openqa.selenium.By.xpath(&quot;(//input[@class = &apos;owl-dt-timer-input&apos;])[1]&quot;)).clear()
+WDS.browser.findElement(org.openqa.selenium.By.xpath(&quot;(//input[@class = &apos;owl-dt-timer-input&apos;])[1]&quot;)).sendKeys(&quot;09&quot;)
+
+Thread.sleep(1000)
+
+WDS.browser.findElement(org.openqa.selenium.By.xpath(&quot;(//input[@class = &apos;owl-dt-timer-input&apos;])[2]&quot;)).clear()
+WDS.browser.findElement(org.openqa.selenium.By.xpath(&quot;(//input[@class = &apos;owl-dt-timer-input&apos;])[2]&quot;)).sendKeys(&quot;30&quot;)
+
+Thread.sleep(1000)
+
+//check the time mode like AM or PM
+String timeModeForAM = WDS.browser.findElement(org.openqa.selenium.By.xpath(&quot;(//span[@class = &apos;owl-dt-control-button-content&apos;])[5]&quot;)).getText()
+
+if(timeModeForAM.equalsIgnoreCase(&quot;PM&quot;))
+{
+WDS.browser.findElement(org.openqa.selenium.By.xpath(&quot;(//span[@class = &apos;owl-dt-control-button-content&apos;])[5]&quot;)).click()
+    }
+
+Thread.sleep(1000)
+
+//Select the set button
+WDS.browser.findElement(org.openqa.selenium.By.xpath(&quot;//span[text() = &apos;Set&apos;]&quot;)).click()
+Thread.sleep(2000)
+
+Thread.sleep(2000)
+
+//click on the out_time field
+WDS.browser.findElement(org.openqa.selenium.By.xpath(&quot;//input[@placeholder = &apos;Select Out Time&apos;]&quot;)).click()
+
+Thread.sleep(2000)
+
+//select out-time  date
+WDS.log.info(&quot;row number for out time ==: &quot; + r + &quot; column Number  for out time ==: &quot; + c)
+WebElement dateAndTimeTableForOut = WDS.browser.findElement(org.openqa.selenium.By.xpath(&quot;//*[@class=&apos;owl-dt-calendar-view ng-star-inserted&apos;]/table/tbody&quot;))
+dateAndTimeTableForOut.findElement(org.openqa.selenium.By.xpath(&quot;(tr[&quot;+ toDateRowNum +&quot;]/td[  contains(@aria-label,&apos;&quot;+ month +&quot; &apos;)])&quot; + &quot;[ &quot; + toDateColNum + &quot; ]&quot;)).click();
+
+Thread.sleep(2000)
+
+WDS.browser.findElement(org.openqa.selenium.By.xpath(&quot;(//input[@class = &apos;owl-dt-timer-input&apos;])[1]&quot;)).clear()
+WDS.browser.findElement(org.openqa.selenium.By.xpath(&quot;(//input[@class = &apos;owl-dt-timer-input&apos;])[1]&quot;)).sendKeys(&quot;06&quot;)
+
+Thread.sleep(2000)
+
+WDS.browser.findElement(org.openqa.selenium.By.xpath(&quot;(//input[@class = &apos;owl-dt-timer-input&apos;])[2]&quot;)).clear()
+WDS.browser.findElement(org.openqa.selenium.By.xpath(&quot;(//input[@class = &apos;owl-dt-timer-input&apos;])[2]&quot;)).sendKeys(&quot;30&quot;)
+
+Thread.sleep(2000)
+
+//check the time mode like AM or PM
+String timeModeForPM = WDS.browser.findElement(org.openqa.selenium.By.xpath(&quot;(//span[@class = &apos;owl-dt-control-button-content&apos;])[5]&quot;)).getText()
+
+if(timeModeForPM.equalsIgnoreCase(&quot;PM&quot;))
+{}else{
+WDS.browser.findElement(org.openqa.selenium.By.xpath(&quot;(//span[@class = &apos;owl-dt-control-button-content&apos;])[5]&quot;)).click()
+}
+
+Thread.sleep(2000)
+
+//Select the set button
+WDS.browser.findElement(org.openqa.selenium.By.xpath(&quot;//span[text() = &apos;Set&apos;]&quot;)).click()
+Thread.sleep(2000)
+
+// Scroll down to the bottom of the page
+WDS.browser.executeScript(&quot;window.scrollTo(0, document.body.scrollHeight);&quot;)
+
+Thread.sleep(2000)
+
+//click on the client name
+
+WDS.browser.findElement(org.openqa.selenium.By.xpath(&quot;//div[@id = &apos;mat-select-value-&quot; + xpathChangeValue + &quot;&apos;]&quot;)).click()
+xpathChangeValue += 2
+Thread.sleep(2000)
+
+//select client name
+WDS.browser.findElement(org.openqa.selenium.By.xpath(&quot;//div[@role = &apos;listbox&apos;]/mat-option&quot;)).click()
+Thread.sleep(2000)
+
+//click on the client location field
+WDS.browser.findElement(org.openqa.selenium.By.xpath(&quot;//div[@id = &apos;mat-select-value-&quot; + xpathChangeValue + &quot;&apos;]&quot;)).click()
+xpathChangeValue += 2
+Thread.sleep(2000)
+
+//select client location
+WDS.browser.findElement(org.openqa.selenium.By.xpath(&quot;//div[@role = &apos;listbox&apos;]/mat-option&quot;)).click()
+Thread.sleep(2000)
+
+//click Team Name field
+WDS.browser.findElement(org.openqa.selenium.By.xpath(&quot;//div[@id = &apos;mat-select-value-&quot; + xpathChangeValue + &quot;&apos;]&quot;)).click()
+xpathChangeValue += 2
+Thread.sleep(2000)
+
+//Select Team Name
+WDS.browser.findElement(org.openqa.selenium.By.xpath(&quot;//div[@role = &apos;listbox&apos;]/mat-option&quot;)).click()
+Thread.sleep(2000)
+
+// Locate the dropdown element for ACtivity
+def dropdownElementForActivity = WDS.browser.findElement(org.openqa.selenium.By.xpath(&quot;//select[@class = &apos;form-control ng-untouched ng-pristine ng-valid&apos;]&quot;))
+
+// Initialize Select class with the dropdown element
+def dropdownForActivity = new org.openqa.selenium.support.ui.Select(dropdownElementForActivity)
+
+Thread.sleep(2000)
+
+// Select an option by index
+dropdownForActivity.selectByIndex(1)
+
+Thread.sleep(2000)
+
+//Enter the description
+WDS.browser.findElement(org.openqa.selenium.By.xpath(&quot;//textarea[@class = &apos;form-control ng-untouched ng-pristine ng-valid&apos;]&quot;)).sendKeys(txtFileRead.get(selectDate))
+
+Thread.sleep(2000)
+
+////Enter the working hour
+//WDS.browser.findElement(org.openqa.selenium.By.xpath(
+//    &quot;//input[@class = &apos;form-control ng-untouched ng-pristine ng-valid&apos;]&quot;)).sendKeys(&quot;9&quot;)
+//
+//    Thread.sleep(2000)   
+//
+////WDS.browser.findElement(org.openqa.selenium.By.xpath(&quot;//button[text() = &apos;Create Timesheet&apos;]&quot;)).click();
+//   Thread.sleep(2000)
+////WDS.browser.findElement(org.openqa.selenium.By.xpath(&quot;//button[text()=&apos;OK&apos;]&quot;)).click();
+//
+//
+
+
+	}
+
+
+
+//select in-time  date
+//WDS.browser.findElement(org.openqa.selenium.By.xpath(&quot;//table[@class = &apos;owl-dt-calendar-table owl-dt-calendar-month-table&apos;]/tbody/tr[5]/td[7]&quot;)).click()
+
+
+//		WDS.browser.findElement(org.openqa.selenium.By.xpath(&quot;//div[@class = &apos;cdk-overlay-backdrop cdk-overlay-transparent-backdrop cdk-overlay-backdrop-showing&apos;]&quot;)).click()
+WDS.browser.findElement(org.openqa.selenium.By.xpath(&quot;//li[@title = &apos;Home&apos;]&quot;)).click()
+
+
+
+   Thread.sleep(2000)
+WDS.browser.findElement(org.openqa.selenium.By.cssSelector(&quot;#user-dropdown&quot;)).click()
+   Thread.sleep(2000)
+WDS.browser.findElement(org.openqa.selenium.By.xpath(&quot;(//*[@class=&apos;dropdown-item&apos;])[2]&quot;)).click()
+
+// End the sample
+WDS.sampleResult.sampleEnd()</stringProp>
+          <stringProp name="WebDriverSampler.parameters"></stringProp>
+          <stringProp name="WebDriverSampler.language">groovy</stringProp>
+        </com.googlecode.jmeter.plugins.webdriver.sampler.WebDriverSampler>
+        <hashTree/>
+        <com.googlecode.jmeter.plugins.webdriver.sampler.WebDriverSampler guiclass="com.googlecode.jmeter.plugins.webdriver.sampler.gui.WebDriverSamplerGui" testclass="com.googlecode.jmeter.plugins.webdriver.sampler.WebDriverSampler" testname="jp@gc - WebDriver Sampler(Main)" enabled="false">
+          <stringProp name="WebDriverSampler.script">
+import org.openqa.selenium.WebElement
+
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
+
+
+// Navigate to the initial URL
+WDS.sampleResult.sampleStart()
+WDS.browser.get(&apos;https://ishine.apmosys.com&apos;)
+Thread.sleep(2000)
+
+// Fill in username
+WDS.browser.findElement(org.openqa.selenium.By.id(&quot;username&quot;)).sendKeys(&quot;biswajit.sahoo@apmosys.com&quot;)
+Thread.sleep(1000)
+
+// Fill in password
+WDS.browser.findElement(org.openqa.selenium.By.id(&quot;userPassword&quot;)).sendKeys(&quot;Welcome@2022&quot;)
+Thread.sleep(1000)
+
+// Click the SIGN IN button
+WDS.browser.findElement(org.openqa.selenium.By.xpath(&quot;//button[text()=&apos;SIGN IN&apos;]&quot;)).click()
+Thread.sleep(3000)
+
+// Open a new tab using JavaScript
+WDS.browser.executeScript(&quot;window.open()&quot;)
+Thread.sleep(1000)
+
+// Get handles of all windows
+def windowHandles = WDS.browser.getWindowHandles()
+
+// Switch to the new tab
+String newTabHandle = windowHandles.toArray()[1]
+WDS.browser.switchTo().window(newTabHandle)
+
+// Navigate to the new URL
+WDS.browser.get(&apos;https://mail.apmosys.com/webmail&apos;)
+Thread.sleep(1000)
+
+try{
+// Fill in email address
+WDS.browser.findElement(org.openqa.selenium.By.name(&quot;email-address&quot;)).sendKeys(&quot;biswajit.sahoo@apmosys.com&quot;)
+Thread.sleep(1000)
+
+// Click next
+WDS.browser.findElement(org.openqa.selenium.By.name(&quot;next&quot;)).click()
+Thread.sleep(1000)
+
+// Fill in password
+WDS.browser.findElement(org.openqa.selenium.By.name(&quot;password&quot;)).sendKeys(&quot;Apmosys@2022&quot;)
+Thread.sleep(1000)
+
+// Click next
+WDS.browser.findElement(org.openqa.selenium.By.name(&quot;next&quot;)).click()
+} catch(Exception e){
+// Fill in password
+WDS.browser.findElement(org.openqa.selenium.By.name(&quot;password&quot;)).sendKeys(&quot;Apmosys@123&quot;)
+Thread.sleep(1000)
+
+// Click next
+WDS.browser.findElement(org.openqa.selenium.By.name(&quot;next&quot;)).click()
+	}
+Thread.sleep(10000)
+
+//click on the first mail
+//WDS.browser.findElement(org.openqa.selenium.By.xpath(&quot;//div[@id = &apos;gui.frm_main.main.list/*&apos;]/div[1]&quot;)).click()
+
+def iframeElement = null
+iframeElement = WDS.browser.findElement(org.openqa.selenium.By.xpath(&quot;//iframe[@id=&apos;gui.frm_main.main.mailview#frame&apos;]&quot;))
+    // Switch to the iframe
+    String emailContent=&quot;&quot;;
+   if (iframeElement != null) {
+    // Switch to the iframe
+    WDS.browser.switchTo().frame(iframeElement)
+
+    // Now you can interact with elements within the iframe
+    emailContent = WDS.browser.findElement(org.openqa.selenium.By.id(&quot;iw_webmail_msg_body&quot;)).getText()
+    WDS.log.info(emailContent)
+    // If needed, switch back to the default content
+    WDS.browser.switchTo().defaultContent()
+} else {
+    log.error(&quot;Timeout waiting for iframe to be present&quot;)
+}
+// WDS.log.info(emailContent)
+def tokens = emailContent.split(&quot;\\s+&quot;)
+
+// Get the last token, which should be the OTP
+def otp = tokens[-1]
+
+// Print or log the OTP
+WDS.log.info(&quot;OTP: ${otp}&quot;)
+Thread.sleep(2000)
+WDS.browser.close();
+
+// Perform further actions or assertions
+
+// Switch back to the original tab
+WDS.browser.switchTo().window(windowHandles.toArray()[0])
+WDS.log.info(&quot;OTP: ${otp}&quot;)
+WDS.browser.findElement(org.openqa.selenium.By.xpath(&quot;//*[@placeholder=&apos;Enter OTP&apos;]&quot;)).sendKeys(&quot;${otp}&quot;)
+WDS.log.info(&quot;OTP: ${otp}&quot;)
+
+//click on submit button
+WDS.browser.findElement(org.openqa.selenium.By.xpath(&quot;//button[@type=&apos;submit&apos;]&quot;)).click()
+Thread.sleep(5000)
+
+
+xpathChangeValue = ${csvForIncrement}
+for(repeat = 1; repeat &lt;= 3; repeat++){
+
+//click on timesheet icon
+WDS.browser.findElement(org.openqa.selenium.By.xpath(&quot;//li[@title = &apos;Timesheets&apos;]&quot;)).click()
+
+// Locate the dropdown element
+def dropdownElement = WDS.browser.findElement(org.openqa.selenium.By.xpath(&quot;(//select[@class = &apos;form-control ng-untouched ng-pristine ng-valid&apos;])[1]&quot;))
+
+// Initialize Select class with the dropdown element
+def dropdown = new org.openqa.selenium.support.ui.Select(dropdownElement)
+
+Thread.sleep(2000)
+
+// Select an option by visible text
+dropdown.selectByVisibleText(&quot;Working&quot;)
+
+Thread.sleep(2000)
+
+//click on the in_time field
+WDS.browser.findElement(org.openqa.selenium.By.xpath(&quot;//input[@placeholder = &apos;Select In Time&apos;]&quot;)).click()
+
+Thread.sleep(2000)
+
+
+
+
+
+
+
+
+
+
+
+   
+    // Get the current date
+    LocalDateTime now = LocalDateTime.now()
+    // Define the date format
+    DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern(&quot;dd&quot;)
+//     // Define the date format
+    DateTimeFormatter monthFormatter = DateTimeFormatter.ofPattern(&quot;MMMM&quot;)
+//    // Format the current date
+    String date = now.format(dateFormatter)
+//    // Format the current month
+    String month = now.format(monthFormatter)
+
+ 
+// Log the current date
+WDS.log.info(&quot;Current date ======================================================== : &quot; + date)
+WDS.log.info(&quot;Current month =======================================================: &quot; + month)
+
+////select in-time  date dynamic way
+
+WebElement dateAndTimeTable = WDS.browser.findElement(org.openqa.selenium.By.xpath(&quot;//*[@class=&apos;owl-dt-calendar-view ng-star-inserted&apos;]/table/tbody&quot;))
+
+rowSize = dateAndTimeTable.findElements(org.openqa.selenium.By.xpath(&quot;tr&quot;)).size()
+WDS.log.info(&quot;Current month row size =======================================================: &quot; + rowSize)
+
+int toDateRowNum
+int toDateColNum
+for(r = 1; r &lt;= rowSize; r++){
+	colSize = dateAndTimeTable.findElements(org.openqa.selenium.By.xpath(&quot;tr[&quot;+ r +&quot;]/td[  contains(@aria-label,&apos;&quot;+ month +&quot; &apos;)]&quot;)).size();
+//    WDS.log.info(&quot;current row column size =======================================================: &quot; + colSize)
+    for (c = 1; c &lt;= colSize; c++) {
+    	 CheckDate = dateAndTimeTable.findElement(org.openqa.selenium.By.xpath(&quot;tr[&quot;+ r +&quot;]/td[&quot;+ c +&quot;]&quot;)).getText();
+        if (CheckDate.equalsIgnoreCase(date)) {
+            // if(CheckDate.equalsIgnoreCase(&quot;15&quot;)) {
+            dateAndTimeTable.findElement(org.openqa.selenium.By.xpath(&quot;tr[&quot;+ r +&quot;]/td[&quot;+ c +&quot;]&quot;)).click();
+             WDS.log.info(&quot;i find the date in row number ==: &quot; + r + &quot; column Number ==: &quot; + c)
+             toDateRowNum = r
+             toDateColNum = c
+            break;
+        }
+    }
+}
+
+
+
+
+
+//select in-time  date
+//WDS.browser.findElement(org.openqa.selenium.By.xpath(&quot;//table[@class = &apos;owl-dt-calendar-table owl-dt-calendar-month-table&apos;]/tbody/tr[5]/td[7]&quot;)).click()
+
+Thread.sleep(2000)
+
+WDS.browser.findElement(org.openqa.selenium.By.xpath(&quot;(//input[@class = &apos;owl-dt-timer-input&apos;])[1]&quot;)).clear()
+WDS.browser.findElement(org.openqa.selenium.By.xpath(&quot;(//input[@class = &apos;owl-dt-timer-input&apos;])[1]&quot;)).sendKeys(&quot;09&quot;)
+
+Thread.sleep(2000)
+
+WDS.browser.findElement(org.openqa.selenium.By.xpath(&quot;(//input[@class = &apos;owl-dt-timer-input&apos;])[2]&quot;)).clear()
+WDS.browser.findElement(org.openqa.selenium.By.xpath(&quot;(//input[@class = &apos;owl-dt-timer-input&apos;])[2]&quot;)).sendKeys(&quot;30&quot;)
+
+Thread.sleep(2000)
+
+//check the time mode like AM or PM
+String timeModeForAM = WDS.browser.findElement(org.openqa.selenium.By.xpath(&quot;(//span[@class = &apos;owl-dt-control-button-content&apos;])[5]&quot;)).getText()
+
+if(timeModeForAM.equalsIgnoreCase(&quot;PM&quot;))
+{
+WDS.browser.findElement(org.openqa.selenium.By.xpath(&quot;(//span[@class = &apos;owl-dt-control-button-content&apos;])[5]&quot;)).click()
+    }
+
+Thread.sleep(5000)
+
+//Select the set button
+WDS.browser.findElement(org.openqa.selenium.By.xpath(&quot;//span[text() = &apos;Set&apos;]&quot;)).click()
+Thread.sleep(2000)
+
+//click on the out_time field
+WDS.browser.findElement(org.openqa.selenium.By.xpath(&quot;//input[@placeholder = &apos;Select Out Time&apos;]&quot;)).click()
+
+Thread.sleep(2000)
+
+//select out-time  date
+WDS.log.info(&quot;row number for out time ==: &quot; + r + &quot; column Number  for out time ==: &quot; + c)
+WebElement dateAndTimeTableForOut = WDS.browser.findElement(org.openqa.selenium.By.xpath(&quot;//*[@class=&apos;owl-dt-calendar-view ng-star-inserted&apos;]/table/tbody&quot;))
+dateAndTimeTableForOut.findElement(org.openqa.selenium.By.xpath(&quot;tr[&quot;+ toDateRowNum +&quot;]/td[&quot;+ toDateColNum +&quot;]&quot;)).click();
+
+Thread.sleep(2000)
+
+WDS.browser.findElement(org.openqa.selenium.By.xpath(&quot;(//input[@class = &apos;owl-dt-timer-input&apos;])[1]&quot;)).clear()
+WDS.browser.findElement(org.openqa.selenium.By.xpath(&quot;(//input[@class = &apos;owl-dt-timer-input&apos;])[1]&quot;)).sendKeys(&quot;06&quot;)
+
+Thread.sleep(2000)
+
+WDS.browser.findElement(org.openqa.selenium.By.xpath(&quot;(//input[@class = &apos;owl-dt-timer-input&apos;])[2]&quot;)).clear()
+WDS.browser.findElement(org.openqa.selenium.By.xpath(&quot;(//input[@class = &apos;owl-dt-timer-input&apos;])[2]&quot;)).sendKeys(&quot;30&quot;)
+
+Thread.sleep(2000)
+
+//check the time mode like AM or PM
+String timeModeForPM = WDS.browser.findElement(org.openqa.selenium.By.xpath(&quot;(//span[@class = &apos;owl-dt-control-button-content&apos;])[5]&quot;)).getText()
+
+if(timeModeForPM.equalsIgnoreCase(&quot;PM&quot;))
+{}else{
+WDS.browser.findElement(org.openqa.selenium.By.xpath(&quot;(//span[@class = &apos;owl-dt-control-button-content&apos;])[5]&quot;)).click()
+}
+
+Thread.sleep(2000)
+
+//Select the set button
+WDS.browser.findElement(org.openqa.selenium.By.xpath(&quot;//span[text() = &apos;Set&apos;]&quot;)).click()
+Thread.sleep(2000)
+
+// Scroll down to the bottom of the page
+WDS.browser.executeScript(&quot;window.scrollTo(0, document.body.scrollHeight);&quot;)
+
+Thread.sleep(2000)
+
+//click on the client name
+
+WDS.browser.findElement(org.openqa.selenium.By.xpath(&quot;//div[@id = &apos;mat-select-value-&quot; + xpathChangeValue + &quot;&apos;]&quot;)).click()
+xpathChangeValue += 2
+Thread.sleep(2000)
+
+//select client name
+WDS.browser.findElement(org.openqa.selenium.By.xpath(&quot;//div[@role = &apos;listbox&apos;]/mat-option&quot;)).click()
+Thread.sleep(2000)
+
+//click on the client location field
+WDS.browser.findElement(org.openqa.selenium.By.xpath(&quot;//div[@id = &apos;mat-select-value-&quot; + xpathChangeValue + &quot;&apos;]&quot;)).click()
+xpathChangeValue += 2
+Thread.sleep(2000)
+
+//select client location
+WDS.browser.findElement(org.openqa.selenium.By.xpath(&quot;//div[@role = &apos;listbox&apos;]/mat-option&quot;)).click()
+Thread.sleep(2000)
+
+//click Team Name field
+WDS.browser.findElement(org.openqa.selenium.By.xpath(&quot;//div[@id = &apos;mat-select-value-&quot; + xpathChangeValue + &quot;&apos;]&quot;)).click()
+xpathChangeValue += 2
+Thread.sleep(2000)
+
+//Select Team Name
+WDS.browser.findElement(org.openqa.selenium.By.xpath(&quot;//div[@role = &apos;listbox&apos;]/mat-option&quot;)).click()
+Thread.sleep(2000)
+
+// Locate the dropdown element for ACtivity
+def dropdownElementForActivity = WDS.browser.findElement(org.openqa.selenium.By.xpath(&quot;//select[@class = &apos;form-control ng-untouched ng-pristine ng-valid&apos;]&quot;))
+
+// Initialize Select class with the dropdown element
+def dropdownForActivity = new org.openqa.selenium.support.ui.Select(dropdownElementForActivity)
+
+Thread.sleep(2000)
+
+// Select an option by index
+dropdownForActivity.selectByIndex(1)
+
+Thread.sleep(2000)
+
+//Enter the description
+WDS.browser.findElement(org.openqa.selenium.By.xpath(&quot;//textarea[@class = &apos;form-control ng-untouched ng-pristine ng-valid&apos;]&quot;)).sendKeys(&quot;Working in TJSB&quot;)
+
+Thread.sleep(2000)
+
+////Enter the working hour
+//WDS.browser.findElement(org.openqa.selenium.By.xpath(
+//    &quot;//input[@class = &apos;form-control ng-untouched ng-pristine ng-valid&apos;]&quot;)).sendKeys(&quot;9&quot;)
+//
+//    Thread.sleep(2000)   
+//
+////WDS.browser.findElement(org.openqa.selenium.By.xpath(&quot;//button[text() = &apos;Create Timesheet&apos;]&quot;)).click();
+//   Thread.sleep(2000)
+////WDS.browser.findElement(org.openqa.selenium.By.xpath(&quot;//button[text()=&apos;OK&apos;]&quot;)).click();
+//
+//
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+WDS.browser.findElement(org.openqa.selenium.By.xpath(&quot;//li[@title = &apos;Home&apos;]&quot;)).click()
+}
+
+
+   Thread.sleep(2000)
+WDS.browser.findElement(org.openqa.selenium.By.cssSelector(&quot;#user-dropdown&quot;)).click()
+   Thread.sleep(2000)
+WDS.browser.findElement(org.openqa.selenium.By.xpath(&quot;(//*[@class=&apos;dropdown-item&apos;])[2]&quot;)).click()
+
+// End the sample
+WDS.sampleResult.sampleEnd()</stringProp>
+          <stringProp name="WebDriverSampler.parameters"></stringProp>
+          <stringProp name="WebDriverSampler.language">groovy</stringProp>
+        </com.googlecode.jmeter.plugins.webdriver.sampler.WebDriverSampler>
+        <hashTree/>
+        <ResultCollector guiclass="ViewResultsFullVisualizer" testclass="ResultCollector" testname="View Results Tree">
+          <boolProp name="ResultCollector.error_logging">false</boolProp>
+          <objProp>
+            <name>saveConfig</name>
+            <value class="SampleSaveConfiguration">
+              <time>true</time>
+              <latency>true</latency>
+              <timestamp>true</timestamp>
+              <success>true</success>
+              <label>true</label>
+              <code>true</code>
+              <message>true</message>
+              <threadName>true</threadName>
+              <dataType>true</dataType>
+              <encoding>false</encoding>
+              <assertions>true</assertions>
+              <subresults>true</subresults>
+              <responseData>false</responseData>
+              <samplerData>false</samplerData>
+              <xml>false</xml>
+              <fieldNames>true</fieldNames>
+              <responseHeaders>false</responseHeaders>
+              <requestHeaders>false</requestHeaders>
+              <responseDataOnError>false</responseDataOnError>
+              <saveAssertionResultsFailureMessage>true</saveAssertionResultsFailureMessage>
+              <assertionsResultsToSave>0</assertionsResultsToSave>
+              <bytes>true</bytes>
+              <sentBytes>true</sentBytes>
+              <url>true</url>
+              <threadCounts>true</threadCounts>
+              <idleTime>true</idleTime>
+              <connectTime>true</connectTime>
+            </value>
+          </objProp>
+          <stringProp name="filename"></stringProp>
+        </ResultCollector>
+        <hashTree/>
+      </hashTree>
+    </hashTree>
+  </hashTree>
+</jmeterTestPlan>
